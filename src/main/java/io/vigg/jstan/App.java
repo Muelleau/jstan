@@ -3,7 +3,7 @@ package io.vigg.jstan;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
+
 
 class App {
 
@@ -14,10 +14,21 @@ class App {
         var exec = String.format("""
                     make -C %s %s
                 """, CMDSTAN_DIR, cmd);
-        var process = Runtime.getRuntime().exec(
-                exec
-        );
+        cmdExecStdout(exec);
+    }
 
+    static void runModel(String model, String data, String tech) throws IOException {
+        var exec = String.format("""
+                ./bin/cmdstan-2.29.2/%s %s data file=./bin/cmdstan-2.29.2/%s
+                """, model, tech, data);
+
+        cmdExecStdout(exec);
+        return;
+
+    }
+
+    private static void cmdExecStdout(String exec) throws IOException {
+        var process = Runtime.getRuntime().exec(exec);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
         String line;
@@ -33,6 +44,7 @@ class App {
         System.out.println("Hello, World!");
 
         buildModel("examples/bernoulli/bernoulli");
+        runModel("examples/bernoulli/bernoulli", "examples/bernoulli/bernoulli.data.json", "sample");
 
 
     }
