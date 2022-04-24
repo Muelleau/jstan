@@ -1,7 +1,9 @@
 package io.vigg.jstan.methods.sample;
 
 import io.vigg.jstan.methods.sample.adapt.Adapt;
+import io.vigg.jstan.methods.sample.adapt.AdaptBuilder;
 import io.vigg.jstan.methods.sample.algorithm.Algorithm;
+import io.vigg.jstan.methods.sample.algorithm.AlgorithmBuilder;
 
 public class SampleBuilder {
 
@@ -9,8 +11,8 @@ public class SampleBuilder {
     private Integer numWarmup = 1000;
     private Integer saveWarmup = 0;
     private Integer thin = 1;
-    private Adapt adapt;
-    private Algorithm algorithm;
+    private Adapt adapt = new AdaptBuilder().build();
+    private Algorithm algorithm = new AlgorithmBuilder().build();
 
     public SampleBuilder setNumSamples(Integer numSamples) {
         this.numSamples = numSamples;

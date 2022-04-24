@@ -8,7 +8,7 @@ public class StanRandomBuilder {
         return this;
     }
 
-    public StanRandom createStanRandom() {
+    public StanRandom build() {
         return new StanRandom(seed);
     }
 }

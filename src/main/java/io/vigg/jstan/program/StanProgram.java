@@ -19,7 +19,13 @@ public class StanProgram {
     private StanInit init;
     private StanRandom random;
 
-    public StanProgram(StanMethod method, StanData data, StanOutput output, StanInit init, StanRandom random) {
+    public StanProgram(
+            StanMethod method,
+            StanData data,
+            StanOutput output,
+            StanInit init,
+            StanRandom random
+    ) {
         this.method = method;
         this.data = data;
         this.output = output;

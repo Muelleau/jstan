@@ -1,10 +1,11 @@
 package io.vigg.jstan.methods.sample;
 
 import io.vigg.jstan.StanCommandComponent;
+import io.vigg.jstan.methods.StanMethod;
 import io.vigg.jstan.methods.sample.adapt.Adapt;
 import io.vigg.jstan.methods.sample.algorithm.Algorithm;
 
-public class Sample extends StanCommandComponent {
+public class Sample extends StanMethod {
 
     private Integer numSamples;
     private Integer numWarmup;

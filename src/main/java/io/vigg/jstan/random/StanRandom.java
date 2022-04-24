@@ -1,6 +1,8 @@
 package io.vigg.jstan.random;
 
-public class StanRandom {
+import io.vigg.jstan.StanCommandComponent;
+
+public class StanRandom extends StanCommandComponent {
 
     private Long seed = 3252652196L;
 
@@ -12,4 +14,10 @@ public class StanRandom {
         return seed;
     }
 
+    @Override
+    public String genCmd() {
+        return String.format("""
+                random \
+                seed=%s""", getSeed().toString());
+    }
 }

@@ -27,7 +27,7 @@ public class StanOutputBuilder {
         return this;
     }
 
-    public StanOutput createStanOutput() {
+    public StanOutput build() {
         return new StanOutput(file, diagnosticFile, refresh, sigFigs);
     }
 }

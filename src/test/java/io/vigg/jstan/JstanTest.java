@@ -1,11 +1,17 @@
 package io.vigg.jstan;
 
 import io.vigg.jstan.data.JsonData;
+import io.vigg.jstan.data.StanDataBuilder;
 import io.vigg.jstan.methods.sample.SampleBuilder;
 import io.vigg.jstan.methods.sample.adapt.AdaptBuilder;
 import io.vigg.jstan.methods.sample.algorithm.Algorithm;
 import io.vigg.jstan.methods.sample.algorithm.AlgorithmBuilder;
 import io.vigg.jstan.output.StanOutput;
+import io.vigg.jstan.output.StanOutputBuilder;
+import io.vigg.jstan.program.StanProgram;
+import io.vigg.jstan.program.StanProgramBuilder;
+import io.vigg.jstan.random.StanRandom;
+import io.vigg.jstan.random.StanRandomBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -73,6 +79,17 @@ public class JstanTest {
     }
 
     @Test
+    public void testSeed() throws IOException {
+
+        var seed = new StanRandomBuilder()
+                .setSeed(2L)
+                .build();
+
+        Assert.assertEquals("random seed=2", seed.genCmd());
+
+    }
+
+    @Test
     public void testStanSampleMethod() throws IOException {
 
         var adapt = new AdaptBuilder().build();
@@ -87,36 +104,32 @@ public class JstanTest {
                 sample.genCmd()
         );
 
-        System.out.println(sample.genCmd());
     }
 
     @Test
     public void testCompile() throws IOException {
 
-//        var method = new SampleMethod();
-//        var data = new JsonData("examples/bernoulli/bernoulli.data.json");
-//        var output = new StanOutputBuilder()
-//                .setDiagnosticFile("diag.csv")
-//                .setFile("o2.csv")
-//                .setRefresh(100)
-//                .createStanOutput();
-//        var init = new StanInit();
-//        var random = new StanRandomBuilder().setSeed(3252652196L).createStanRandom();
-//
-//        StanProgram program = new StanProgramBuilder()
-//                .setMethod(method)
-//                .setData(data)
-//                .setOutput(output)
-//                .setInit(init)
-//                .setRandom(random)
-//                .build();
-//
-//        System.out.println(method.getCliText());
-//
-//        System.out.println(program.getData().getPath());
-//
-//        program.compile();
-//        program.run();
+        var method = new SampleBuilder().build();
+
+        var data = new StanDataBuilder()
+                .setPath("examples/bernoulli/bernoulli.data.json")
+                .build();
+
+        var output = new StanOutputBuilder()
+                .build();
+
+        var random = new StanRandomBuilder()
+                .setSeed(3252652196L)
+                .build();
+
+        StanProgram program = new StanProgramBuilder()
+                .setMethod(method)
+                .setData(data)
+                .setOutput(output)
+                .setRandom(random)
+                .build();
+
+        System.out.println(program.getMethod().genCmd());
 
     }
 
