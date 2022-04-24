@@ -33,8 +33,7 @@ public class Algorithm extends StanCommandComponent {
         return String.format("""
                 algorithm=hmc hmc engine=%s max_depth=%s \
                 metric=%s metric_file=%s step_size=%s \
-                step_size_jitter=%s
-                """,
+                step_size_jitter=%s""",
                 getEngine(),
                 getMaxDepth(),
                 getMetric(),
