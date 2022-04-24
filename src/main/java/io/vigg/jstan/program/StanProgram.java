@@ -58,11 +58,20 @@ public class StanProgram {
 
     public void run() throws IOException {
         var exec = String.format("""
-                ./bin/cmdstan-2.29.2/%s %s data file=./bin/cmdstan-2.29.2/%s
+                ./bin/cmdstan-2.29.2/%s %s \
+                data file=./bin/cmdstan-2.29.2/%s \
+                random seed=%s \
+                output file=%s \
+                diagnostic_file=%s \
+                refresh=%s
                 """,
                 "examples/bernoulli/bernoulli",
                 method.getCliText(),
-                data.getPath()
+                data.getPath(),
+                random.getSeed().toString(),
+                output.getFile(),
+                output.getDiagnosticFile(),
+                output.getRefresh().toString()
         );
 
         System.out.println(exec);

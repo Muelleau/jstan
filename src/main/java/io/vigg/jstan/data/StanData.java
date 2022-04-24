@@ -1,8 +1,11 @@
 package io.vigg.jstan.data;
 
-public class StanData {
+import io.vigg.jstan.StanCommandComponent;
+import io.vigg.jstan.config.Config;
 
-    private String path;
+public class StanData extends StanCommandComponent {
+
+    final private String path;
 
     public StanData(String path) {
         this.path = path;
@@ -10,5 +13,15 @@ public class StanData {
 
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public String genCmd() {
+        return String.format("""
+                        data file=./bin/cmdstan-%s/%s
+                        """,
+                Config.CMDSTAN_VERSION,
+                getPath()
+        ).stripLeading().stripTrailing();
     }
 }
