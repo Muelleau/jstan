@@ -27,21 +27,17 @@ public class JstanTest {
 
     @Test
     public void testStanData() throws IOException {
-
         var data = new JsonData("examples/bernoulli/bernoulli.data.json");
-
         Assert.assertEquals(
                 "data file=./bin/cmdstan-2.29.2/examples/bernoulli/bernoulli.data.json",
                 data.genCmd()
         );
-
     }
 
     @Test
     public void testAlgorithm() throws IOException {
 
         var algorithm = new AlgorithmBuilder().build();
-        System.out.println(algorithm.genCmd());
         Assert.assertEquals("""
                 algorithm=hmc hmc engine=nuts \
                 max_depth=10 metric=diag_e \
@@ -54,7 +50,6 @@ public class JstanTest {
     @Test
     public void testAdapt() throws IOException {
         var adapt = new AdaptBuilder().build();
-        System.out.println(adapt.genCmd());
         Assert.assertEquals("""
                 adapt \
                 engaged=1 \

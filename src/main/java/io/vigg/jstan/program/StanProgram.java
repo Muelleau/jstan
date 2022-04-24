@@ -57,8 +57,6 @@ public class StanProgram {
         var exec = String.format("""
                     make -C %s %s
                 """, Config.CMDSTAN_DIR, "examples/bernoulli/bernoulli");
-
-        System.out.println(exec);
         cmdExecStdout(exec);
     }
 
@@ -79,9 +77,6 @@ public class StanProgram {
                 output.getDiagnosticFile(),
                 output.getRefresh().toString()
         );
-
-        System.out.println(exec);
-
         cmdExecStdout(exec);
     }
 
@@ -93,7 +88,6 @@ public class StanProgram {
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
-
         reader.close();
     }
 }
