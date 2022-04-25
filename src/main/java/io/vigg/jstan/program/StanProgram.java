@@ -9,8 +9,14 @@ import io.vigg.jstan.random.StanRandom;
 import io.vigg.jstan.config.Config;
 
 import java.io.*;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class StanProgram {
+
+    //    bin/cmdstan-2.29.2/bin/stansummary output/linear_regression_test.output.csv
+
 
     private String id;
     private StanModel model;
@@ -28,7 +34,7 @@ public class StanProgram {
             StanOutput output,
             StanInit init,
             StanRandom random
-    ) throws FileNotFoundException, UnsupportedEncodingException {
+    ) throws IOException {
 
         this.id = id;
         this.model = model;
@@ -42,8 +48,11 @@ public class StanProgram {
 
     }
 
-    private void writeModel() throws FileNotFoundException, UnsupportedEncodingException {
+    private void writeModel() throws IOException {
 
+        Files.createDirectories(Paths.get(Config.CMDSTAN_DIR + "models/"));
+
+        System.out.println(Config.CMDSTAN_DIR + "models/"+ getId() + ".stan");
         PrintWriter writer = new PrintWriter(Config.CMDSTAN_DIR + "models/"+ getId() + ".stan", "UTF-8");
         writer.println(model.getModel());
         writer.close();

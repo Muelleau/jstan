@@ -18,9 +18,8 @@ public class StanData extends StanCommandComponent {
     @Override
     public String genCmd() {
         return String.format("""
-                        data file=./bin/cmdstan-%s/%s
+                        data file=%s
                         """,
-                Config.CMDSTAN_VERSION,
                 getPath()
         ).stripLeading().stripTrailing();
     }

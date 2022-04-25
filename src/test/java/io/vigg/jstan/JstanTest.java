@@ -16,14 +16,12 @@ import io.vigg.jstan.program.StanProgram;
 import io.vigg.jstan.program.StanProgramBuilder;
 import io.vigg.jstan.random.StanRandom;
 import io.vigg.jstan.random.StanRandomBuilder;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.UUID;
+
 
 public class JstanTest {
 
@@ -55,7 +53,7 @@ public class JstanTest {
             .build();
 
     StanRandom random = new StanRandomBuilder()
-            .setSeed(3252652196L)
+            .setSeed(2L)
             .build();
 
     StanProgram program = new StanProgramBuilder()
@@ -67,7 +65,7 @@ public class JstanTest {
             .setRandom(random)
             .build();
 
-    public JstanTest() throws FileNotFoundException, UnsupportedEncodingException {}
+    public JstanTest() throws IOException {}
 
     @Test
     public void testStanData() throws IOException {

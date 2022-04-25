@@ -8,6 +8,7 @@ import io.vigg.jstan.output.StanOutput;
 import io.vigg.jstan.random.StanRandom;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class StanProgramBuilder {
@@ -55,7 +56,7 @@ public class StanProgramBuilder {
         return this;
     }
 
-    public StanProgram build() throws FileNotFoundException, UnsupportedEncodingException {
+    public StanProgram build() throws IOException {
         return new StanProgram(id, model, method, data, output, init, random);
     }
 }
