@@ -2,20 +2,8 @@ package io.vigg.jstan.output;
 
 public class StanOutputBuilder {
 
-    private String file;
-    private String diagnosticFile;
-    private Integer refresh;
-    private Integer sigFigs;
-
-    public StanOutputBuilder setFile(String file) {
-        this.file = file;
-        return this;
-    }
-
-    public StanOutputBuilder setDiagnosticFile(String diagnosticFile) {
-        this.diagnosticFile = diagnosticFile;
-        return this;
-    }
+    private Integer refresh = 100;
+    private Integer sigFigs = 2;
 
     public StanOutputBuilder setRefresh(Integer refresh) {
         this.refresh = refresh;
@@ -23,11 +11,11 @@ public class StanOutputBuilder {
     }
 
     public StanOutputBuilder setSigFigs(Integer sigFigs) {
-        this.refresh = refresh;
+        this.sigFigs = sigFigs;
         return this;
     }
 
     public StanOutput build() {
-        return new StanOutput(file, diagnosticFile, refresh, sigFigs);
+        return new StanOutput(refresh, sigFigs);
     }
 }

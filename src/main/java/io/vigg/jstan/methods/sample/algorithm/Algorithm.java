@@ -31,14 +31,11 @@ public class Algorithm extends StanCommandComponent {
     @Override
     public String genCmd() {
         return String.format("""
-                algorithm=hmc hmc engine=%s max_depth=%s \
-                metric=%s metric_file=%s step_size=%s \
-                step_size_jitter=%s""",
+                algorithm=hmc engine=%s max_depth=%s \
+                metric=%s""",
                 getEngine(),
                 getMaxDepth(),
                 getMetric(),
-                getMetricFile(),
-                getStepsize(),
                 getStepSizeJitter()
                 );
     }

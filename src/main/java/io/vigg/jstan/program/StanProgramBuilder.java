@@ -3,11 +3,17 @@ package io.vigg.jstan.program;
 import io.vigg.jstan.data.StanData;
 import io.vigg.jstan.init.StanInit;
 import io.vigg.jstan.methods.StanMethod;
+import io.vigg.jstan.model.StanModel;
 import io.vigg.jstan.output.StanOutput;
 import io.vigg.jstan.random.StanRandom;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+
 public class StanProgramBuilder {
 
+    private String id;
+    private StanModel model;
     private StanMethod method;
     private StanData data;
     private StanOutput output;
@@ -16,6 +22,16 @@ public class StanProgramBuilder {
 
     public StanProgramBuilder setMethod(StanMethod method) {
         this.method = method;
+        return this;
+    }
+
+    public StanProgramBuilder setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public StanProgramBuilder setModel(StanModel model) {
+        this.model = model;
         return this;
     }
 
@@ -39,7 +55,7 @@ public class StanProgramBuilder {
         return this;
     }
 
-    public StanProgram build() {
-        return new StanProgram(method, data, output, init, random);
+    public StanProgram build() throws FileNotFoundException, UnsupportedEncodingException {
+        return new StanProgram(id, model, method, data, output, init, random);
     }
 }

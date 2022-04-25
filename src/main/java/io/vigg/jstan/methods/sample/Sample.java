@@ -56,7 +56,6 @@ public class Sample extends StanMethod {
     @Override
     public String genCmd() {
         return String.format("""
-                        method=sample \
                         sample \
                         num_samples=%s \
                         num_warmup=%s \

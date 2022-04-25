@@ -4,18 +4,8 @@ import io.vigg.jstan.StanCommandComponent;
 
 public class StanOutput extends StanCommandComponent {
 
-    private String file="output.csv";
-    private String diagnosticFile="diag.csv";
-    private Integer refresh=100;
-    private Integer sigFigs=2;
-
-    public String getFile() {
-        return file;
-    }
-
-    public String getDiagnosticFile() {
-        return diagnosticFile;
-    }
+    private Integer refresh;
+    private Integer sigFigs;
 
     public Integer getRefresh() {
         return refresh;
@@ -25,20 +15,17 @@ public class StanOutput extends StanCommandComponent {
         return sigFigs;
     }
 
-    public StanOutput(String file, String diagnosticFile, Integer refresh, Integer sigFigs) {
-        this.file=file;
-        this.diagnosticFile=diagnosticFile;
+    public StanOutput(Integer refresh, Integer sigFigs) {
         this.refresh = refresh;
+        this.sigFigs = sigFigs;
     }
 
     @Override
     public String genCmd() {
         return String.format("""
-                output file=%s diagnostic_file=%s refresh=%s
                 """,
-                getFile(),
-                getDiagnosticFile(),
-                getRefresh().toString()
+                getRefresh().toString(),
+                getSigFigs().toString()
         ).stripTrailing().stripLeading();
     }
 
