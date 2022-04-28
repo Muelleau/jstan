@@ -1,5 +1,6 @@
 package io.vigg.jstan.program;
 
+import io.vigg.jstan.chain.StanChain;
 import io.vigg.jstan.data.StanData;
 import io.vigg.jstan.init.StanInit;
 import io.vigg.jstan.methods.StanMethod;
@@ -7,16 +8,20 @@ import io.vigg.jstan.model.StanModel;
 import io.vigg.jstan.output.StanOutput;
 import io.vigg.jstan.random.StanRandom;
 import io.vigg.jstan.config.Config;
+import tech.tablesaw.columns.Column;
+
+import static tech.tablesaw.aggregate.AggregateFunctions.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class StanProgram {
-
-    //    bin/cmdstan-2.29.2/bin/stansummary output/linear_regression_test.output.csv
-
 
     private String id;
     private StanModel model;
@@ -25,6 +30,7 @@ public class StanProgram {
     private StanOutput output;
     private StanInit init;
     private StanRandom random;
+    private StanChain chain;
 
     public StanProgram(
             String id,
@@ -83,17 +89,20 @@ public class StanProgram {
         return this.random;
     }
 
+    public StanChain getChain() {
+        return this.chain;
+    }
+
     public void compile() throws IOException {
         var exec = String.format("""
                     make -C %s %s
                 """, Config.CMDSTAN_DIR, "models/" + getId());
-
-        System.out.println(exec);
         cmdExecStdout(exec);
     }
 
     public void run() throws IOException {
 
+        //generate the model execution command
         var exec = String.format("""
                 %s %s %s %s output file=%s diagnostic_file=%s
                 """,
@@ -105,16 +114,30 @@ public class StanProgram {
                 getDiagnosticFile()
         );
 
-        System.out.println("Execution Command");
-        System.out.println(exec);
-
+        // execute the model
         cmdExecStdout(exec);
+
+        // read the output chain into memory
+        this.chain = new StanChain(String.format("output/%s.output.csv", getId()));
+
+        var varList = this.chain.getData().columns().stream().map(Column::name).filter(name -> !(Arrays.asList(
+                    "lp__",
+                    "accept_stat__",
+                    "stepsize__",
+                    "treedepth__",
+                    "n_leapfrog__",
+                    "divergent__",
+                    "energy__"
+            ).contains(name))).collect(Collectors.toList());
+
+        System.out.println(
+            this.chain.getData().summarize(varList, mean).apply()
+        );
     }
 
     private String getFileOutputFile() {
         return "output/" + getId() + ".output.csv";
     }
-
     private String getDiagnosticFile() {
         return "output/" + getId() + ".diag.csv";
     }
@@ -125,8 +148,10 @@ public class StanProgram {
                 new InputStreamReader(process.getInputStream()));
         String line;
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+            System.out.println(line + "...");
         }
         reader.close();
     }
+
+
 }

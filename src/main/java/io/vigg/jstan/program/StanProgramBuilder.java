@@ -1,5 +1,6 @@
 package io.vigg.jstan.program;
 
+import io.vigg.jstan.chain.StanChain;
 import io.vigg.jstan.data.StanData;
 import io.vigg.jstan.init.StanInit;
 import io.vigg.jstan.methods.StanMethod;
@@ -20,6 +21,7 @@ public class StanProgramBuilder {
     private StanOutput output;
     private StanInit init;
     private StanRandom random;
+    private StanChain chain;
 
     public StanProgramBuilder setMethod(StanMethod method) {
         this.method = method;

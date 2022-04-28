@@ -21,23 +21,28 @@ public class JStanLinearRegressionTest {
 
     String id = "linear_regression_test";
 
-    StanMethod method = new SampleBuilder().build();
+    StanMethod method = new SampleBuilder()
+            .setNumWarmup(1000)
+            .setNumSamples(1000)
+            .build();
 
     StanModel model = new StanModelBuilder()
             .setModel("""
                         data {
                            int<lower=0> N;
-                           vector[N] x;
+                           int<lower=0> K;
+                           matrix[N, K] x;
                            vector[N] y;
                          }
                          parameters {
                            real alpha;
-                           real beta;
+                           vector[K] beta;
                            real<lower=0> sigma;
                          }
                          model {
-                           y ~ normal(alpha + beta * x, sigma);
+                           y ~ normal(alpha + x * beta, sigma);
                          }
+                         
                     """)
             .build();
 

@@ -1,12 +1,10 @@
 package io.vigg.jstan;
 
-import io.vigg.jstan.data.JsonData;
 import io.vigg.jstan.data.StanData;
 import io.vigg.jstan.data.StanDataBuilder;
 import io.vigg.jstan.methods.StanMethod;
 import io.vigg.jstan.methods.sample.SampleBuilder;
 import io.vigg.jstan.methods.sample.adapt.AdaptBuilder;
-import io.vigg.jstan.methods.sample.algorithm.Algorithm;
 import io.vigg.jstan.methods.sample.algorithm.AlgorithmBuilder;
 import io.vigg.jstan.model.StanModel;
 import io.vigg.jstan.model.StanModelBuilder;
@@ -23,7 +21,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-public class JstanTest {
+public class JStanTest {
 
     String id = UUID.randomUUID().toString();
 
@@ -65,7 +63,7 @@ public class JstanTest {
             .setRandom(random)
             .build();
 
-    public JstanTest() throws IOException {}
+    public JStanTest() throws IOException {}
 
     @Test
     public void testStanData() throws IOException {

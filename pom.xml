@@ -23,6 +23,22 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/tech.tablesaw/tablesaw-core -->
+        <dependency>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-core</artifactId>
+            <version>0.43.1</version>
+        </dependency>
+
+
+
     </dependencies>
 
 </project>
